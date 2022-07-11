@@ -1,4 +1,3 @@
-const sectionItems = document.querySelector('.items');
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -39,6 +38,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 const getItemsComputers = async () => {
+  const sectionItems = document.querySelector('.items');
   const allComputers = await fetchProducts('computador');
   allComputers.results.forEach((item) => {
     const { id: sku, title: name, thumbnail: image } = item;
