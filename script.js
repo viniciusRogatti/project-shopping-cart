@@ -37,7 +37,7 @@ const addItemCard = async (element) => {
   const itemsCart = [];
   for (let i = 0; i < ulItems.children.length; i += 1) {
     itemsCart.push(ulItems.children[i].innerText);
-  } saveCartItems(itemsCart);
+  } saveCartItems(JSON.stringify(itemsCart));
 };
 
 const createProductItemElement = ({ sku, name, image }) => {
