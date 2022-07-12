@@ -51,8 +51,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 const getItemsComputers = async () => {
   const sectionItems = document.querySelector('.items');
   const allComputers = await fetchProducts('computador');
-  allComputers.results.forEach((item) => {
-    const { id: sku, title: name, thumbnail: image } = item;
+  allComputers.results.forEach(({ id: sku, title: name, thumbnail: image }) => {
     const element = createProductItemElement({ sku, name, image });
     sectionItems.appendChild(element);
   });
