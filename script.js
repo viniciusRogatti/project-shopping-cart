@@ -34,6 +34,10 @@ const addItemCard = async (element) => {
   const { id: sku, title: name, price: salePrice } = response;
   const cart = createCartItemElement({ sku, name, salePrice });
   ulItems.appendChild(cart);
+  const itemsCart = [];
+  for (let i = 0; i < ulItems.children.length; i += 1) {
+    itemsCart.push(ulItems.children[i].innerText);
+  } saveCartItems(itemsCart);
 };
 
 const createProductItemElement = ({ sku, name, image }) => {
@@ -57,6 +61,20 @@ const getItemsComputers = async () => {
   });
 };
 
+const getListCard = () => {
+  const carts = getSavedCartItems('cartItems');
+  const array = JSON.parse(carts);
+  if (array) {
+    for (let i = 0; i < array.length; i += 1) {
+      const newLi = document.createElement('li');
+      newLi.innerText = array[i];
+      ulItems.appendChild(newLi);
+      newLi.addEventListener('click', cartItemClickListener);
+    }
+  }
+};
+
 window.onload = () => {
+  getListCard();
   getItemsComputers();
 };
