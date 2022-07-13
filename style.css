@@ -139,17 +139,17 @@ body {
   display: flex;
 }
 
-.divList
-{
+.divList {
   display:flex;
 }
 
-.btnCart
-{
+.btnCart {
   background: rgb(138, 0, 0);
-  color: #fff;
+  width: 15px;
+  height: 15px;
+  color: white;
   border: none;
-  padding: 5px 5px;
+  padding: 5px;
 }
 
 .cart .cart__items {
@@ -165,9 +165,8 @@ body {
   background-color: rgb(249, 249, 246);
 }
 
-.loading
-{
+.loading {
   position: absolute;
-  color: green;
+  color: rgb(0, 128, 0);
   font-size: 1.8rem;
 }
