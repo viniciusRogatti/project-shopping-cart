@@ -124,7 +124,7 @@ const getListCard = () => {
 
 btnEmptyCart.addEventListener('click', () => {
   Array.from(ulItems.children).forEach((e) => e.remove());
-  exibValue.innerHTML = '';
+  exibValue.innerText = '';
   saveItemsList();
 });
 
