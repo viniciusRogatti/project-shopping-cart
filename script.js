@@ -1,8 +1,8 @@
 const ulItems = document.querySelector('.cart__items');
 const exibValue = document.querySelector('.total-price');
-const spanAwaitElement = document.getElementsByClassName('loading');
-const container = document.getElementsByClassName('container');
 const btnEmptyCart = document.querySelector('.empty-cart');
+const container = document.getElementsByClassName('container');
+const spanAwaitElement = document.getElementsByClassName('loading');
 let sumValue = 0;
 
 const awaitApi = () => {
@@ -12,33 +12,28 @@ const awaitApi = () => {
   return spanAwait;
 };
 
-const formatedCurrency = (num) => {
-  exibValue.innerText = num
-    .toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 });
-};
-
-const saveItemsList = async () => {
+const saveItemsList = () => {
   if (ulItems.children.length === 0) return saveCartItems(JSON.stringify(''));
   const itemsCart = [];
   for (let i = 0; i < ulItems.children.length; i += 1) {
-    const neWobj = {
-      content: ulItems.children[i].children[1].innerText,
-      price: ulItems.children[i].children[2].id,
-      thumbnail: ulItems.children[i].children[0].src,
-    }; itemsCart.push(neWobj);
-  }
-  await saveCartItems(JSON.stringify(itemsCart));
+    const obj = {
+      content: ulItems.children[i].innerText,
+      price: ulItems.children[i].id,
+    }; itemsCart.push(obj);
+  } console.log('atualizou o localStorage');
+  saveCartItems(JSON.stringify(itemsCart));
 };
 
 const calculateValue = (obj, operation) => {
   if (operation === 'sub') {
     const number = sumValue - Number(obj);
-    sumValue = Math.round(number);
-    return formatedCurrency(number);
+    sumValue = parseFloat(number);
+    exibValue.innerText = sumValue;
+    return;
   } 
   const number = sumValue + Number(obj);
-  sumValue = Math.round(number);
-  return formatedCurrency(number);
+  sumValue = parseFloat(number);
+  exibValue.innerText = sumValue;
 };
 
 const createProductImageElement = (imageSource) => {
@@ -58,30 +53,28 @@ const createCustomElement = (element, className, innerText) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (e) => {
-  e.target.parentNode.remove();
-  saveItemsList();
   calculateValue(e.target.id, 'sub');
+  ulItems.removeChild(e.target);
+  saveItemsList();
 };
 
-const createCartItemElement = (obj, param) => {
-  const { id, title, price, thumbnail } = obj;
-  let innerText = `SKU: ${id} | NAME: ${title}`;
-  if (param === 'listaStorage') innerText = obj.content;
-  const div = ulItems.appendChild(createCustomElement('div', 'divList', ''));
-  div.appendChild(createProductImageElement(thumbnail));
-  const li = div.appendChild(createCustomElement('li', 'cart__item', innerText));
+const createCartItemElement = ({ sku, name, salePrice }) => {
+  const li = document.createElement('li');
+  li.id = salePrice;
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  const button = div.appendChild(createCustomElement('button', 'btnCart', 'X'));
-  button.addEventListener('click', cartItemClickListener);
-  li.id = price;
+  return li;
 };
 
 const addItemCard = async (element) => {
   container[0].appendChild(awaitApi());
   const getItemId = getSkuFromProductItem(element);
   const response = await fetchItem(getItemId);
-  createCartItemElement(response, 'addCarrinho');
-  calculateValue(response.price, 'sum');
+  const { id: sku, title: name, price: salePrice } = response;
+  const cart = createCartItemElement({ sku, name, salePrice });
+  ulItems.appendChild(cart);
+  calculateValue(salePrice, 'sum');
   saveItemsList();
   spanAwaitElement[0].remove();
 };
@@ -115,11 +108,16 @@ const getListCard = () => {
   let sumPrices = 0;
   if (carts) {
     for (let i = 0; i < carts.length; i += 1) {
-      console.log(carts[i].price);
-      createCartItemElement(carts[i], 'listaStorage');
+      const newLi = document.createElement('li');
+      newLi.innerText = carts[i].content;
+      newLi.id = carts[i].price;
+      ulItems.appendChild(newLi);
       sumPrices += Number(carts[i].price);
-    } sumValue += sumPrices;
-  } formatedCurrency(sumPrices);
+      newLi.addEventListener('click', cartItemClickListener);
+    }
+    sumValue += sumPrices;
+    exibValue.innerText = sumPrices;
+  }
 };
 
 btnEmptyCart.addEventListener('click', () => {
