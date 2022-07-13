@@ -140,7 +140,7 @@ body {
 }
 
 .divList {
-  display:flex;
+  display: flex;
 }
 
 .btnCart {
@@ -167,6 +167,6 @@ body {
 
 .loading {
   position: absolute;
-  color: rgb(0, 128, 0);
+  color: green;
   font-size: 1.8rem;
 }
