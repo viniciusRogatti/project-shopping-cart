@@ -69,10 +69,11 @@ const createCartItemElement = (obj, param) => {
   if (param === 'listaStorage') innerText = obj.content;
   const div = ulItems.appendChild(createCustomElement('div', 'divList', ''));
   div.appendChild(createProductImageElement(thumbnail));
-  div.appendChild(createCustomElement('li', 'cart__item', innerText));
+  const li = div.appendChild(createCustomElement('li', 'cart__item', innerText));
+  li.addEventListener('click', cartItemClickListener);
   const button = div.appendChild(createCustomElement('button', 'btnCart', 'X'));
   button.addEventListener('click', cartItemClickListener);
-  button.id = price;
+  li.id = price;
 };
 
 const addItemCard = async (element) => {
