@@ -135,6 +135,23 @@ body {
   height: 100vh;
 }
 
+.cart__item {
+  display: flex;
+}
+
+.divList
+{
+  display:flex;
+}
+
+.btnCart
+{
+  background: rgb(138, 0, 0);
+  color: #fff;
+  border: none;
+  padding: 5px 5px;
+}
+
 .cart .cart__items {
   height: 500px;
   overflow-y: scroll;
@@ -146,4 +163,11 @@ body {
   margin: 0 auto;
   border: 2px solid rgb(5, 52, 219);
   background-color: rgb(249, 249, 246);
+}
+
+.loading
+{
+  position: absolute;
+  color: green;
+  font-size: 1.8rem;
 }
