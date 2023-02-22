@@ -20,18 +20,36 @@
     <header class="header">
       <div class="container-title">
         <span class="title"><strong>trybe</strong>shopping</span>
+        <div class="box-search">
+          <input id="input-search" type="text" placeholder="Pesquisar" />
+          <button id="btn-search">enter</button>
+        </div>
       </div>
-      <i class="material-icons" style="font-size:45px;color:white">shopping_cart</i>
+      <div class="cart-icon">
+        <i class="material-icons" style="font-size:45px;color:white">shopping_cart</i>
+        <div class="span-count">
+          <span id="count-items">0</span>
+        </div>
+      </div>
       <div class="container-cartTitle">
         <span class="cart__title">Meu carrinho</span>
       </div>
     </header>
     <section class="container">
-      <section class="items"></section>
+      <div class="modal-cart-shop">
+        <h3>Item adicionado ao carrinho!</h3>
+        <img src="/imgs/114597-cart-green.gif" alt="cart-gif">
+        <button class="open-cart">ver meu carrinho</button>
+        <button class="close-cart">fechar</button>
+        <span id="value" class="total-price"></span>
+        <button class="close-cart-x">x</button>
+      </div>
+      <section class="items">
+      </section>
       <section class="cart">
         <ol class="cart__items">          
         </ol>
-        <p><span>Total:</span> <span id="value" class="total-price"></span></p>
+        <span id="value" class="total-price"></span>
         <button class="empty-cart">Esvaziar carrinho</button>
       </section>
     </section>
