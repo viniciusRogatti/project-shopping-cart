@@ -159,8 +159,8 @@ const getItemsComputers = async () => {
 const getListCard = () => {
   const carts = JSON.parse(getSavedCartItems('cartItems'));
   if (!carts) return;
-  countItems.innerText = carts.length;
   if (carts) {
+    countItems.innerText = carts.length;
     for (let i = 0; i < carts.length; i += 1) {
       createCartItemElement(carts[i].content, carts[i].price, carts[i].image)
     }
